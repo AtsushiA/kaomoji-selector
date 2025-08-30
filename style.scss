@@ -1,0 +1,23 @@
+
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ */
+
+.wp-block-w0-kaomoji-selector {
+	text-align: center;
+}
+
+.kaomoji-selector__output {
+	font-family: inherit;
+	display: inline-block;
+}
+
+.kaomoji-selector__current {
+	font-weight: bold;
+}
+
+.kaomoji-selector__button.is-selected {
+	box-shadow: 0 0 3px 2px #cce6f2;
+}
+	

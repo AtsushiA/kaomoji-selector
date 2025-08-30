@@ -1,0 +1,294 @@
+<artefact name="顔文字セレクター" slug="kaomoji-selector" type="code-package">
+  <file name="readme.txt">
+    <description>This file contains the readme information for the block. It is used to provide information about the block, its usage, and any other relevant details.</description>
+    <content><![CDATA[
+=== 顔文字セレクター ===
+Contributors:      w0 block authoring tool
+Tags:              block
+Stable tag:        0.1.0
+License:           GPL-2.0-or-later
+
+エディタ上で簡単に顔文字（kaomoji）を選び、記事に挿入できるブロックです。
+
+== Description ==
+
+このブロックを使うと、よく使われる顔文字一覧から好きなものを選択し、記事やページに簡単に挿入できます。使いやすいインターフェースで、編集と閲覧の両方に同じ顔文字が表示されます。
+
+== Installation ==
+
+1. Upload the plugin files to the `/wp-content/plugins/kaomoji-selector` directory, or install the plugin through the WordPress plugins screen directly.
+1. Activate the plugin through the 'Plugins' screen in WordPress
+
+== Frequently Asked Questions ==
+
+= 顔文字は追加できますか？ =
+
+今はプリセットのみです。将来的なアップデートで追加予定があります。
+
+= カスタム顔文字機能はありますか？ =
+
+現時点ではありません。
+
+== Screenshots ==
+
+1. エディタで顔文字を選択している画面
+2. フロントエンドで顔文字が表示されている画面
+
+== Changelog ==
+
+= 0.1.0 =
+* 最初のリリース。顔文字セレクター機能を提供します。
+
+== Arbitrary section ==
+
+提案や要望があればお知らせください。
+
+]]></content>
+  </file>
+  <file name="kaomoji-selector.php">
+    <description>This file contains the block registration code in the form of a single block plugin. Any other plugin related functionality should be added to this file. All block rendering functionality should go to the `render.php` file.</description>
+    <content><![CDATA[<?php
+/**
+ * Plugin Name:       顔文字セレクター
+ * Description:       エディタ上で簡単に顔文字（kaomoji）を選び、記事に挿入できるブロックです。
+ * Version:           0.1.0
+ * Author:            w0 block authoring tool
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       kaomoji-selector-block-wp
+ *
+ * @package KaomojiSelector
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+/**
+ * Registers the block using the metadata loaded from the `block.json` file.
+ * Behind the scenes, it registers also all assets so they can be enqueued
+ * through the block editor in the corresponding context.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_block_type/
+ */
+function kaomoji_selector_block_init() {
+	register_block_type( __DIR__ . '/build/' );
+}
+add_action( 'init', 'kaomoji_selector_block_init' );
+	]]></content>
+  </file>
+  <file name="block.json">
+    <description>This file contains metadata about the block including its name, title, category, icon, and other properties. The icon is a WordPress Dashicon name (e.g., "admin-post", "format-aside", "admin-page"). Do not use any icon that's not in the list under any circustamce. These are the only slugs available:
+	
+	menu menu-alt menu-alt2 menu-alt3 admin-site admin-site-alt admin-site-alt2 admin-site-alt3 dashboard admin-post admin-media admin-links admin-page admin-comments admin-appearance admin-plugins plugins-checked admin-users admin-tools admin-settings admin-network admin-home admin-generic admin-collapse filter admin-customizer admin-multisite welcome-write-blog welcome-add-page welcome-view-site welcome-widgets-menus welcome-comments welcome-learn-more format-aside format-image format-gallery format-video format-status format-quote format-chat format-audio camera camera-alt images-alt images-alt2 video-alt video-alt2 video-alt3 media-archive media-audio media-code media-default media-document media-interactive media-spreadsheet media-text media-video playlist-audio playlist-video controls-play controls-pause controls-forward controls-skipforward controls-back controls-skipback controls-repeat controls-volumeon controls-volumeoff image-crop image-rotate image-rotate-left image-rotate-right image-flip-vertical image-flip-horizontal image-filter undo redo database-add database database-export database-import database-remove database-view database-view align-full-width align-pull-left align-pull-right align-wide block-default button cloud-saved cloud-upload columns cover-image ellipsis embed-audio embed-generic embed-photo embed-post embed-video exit heading html info-outline insert insert-after insert-before remove saved shortcode table-col-after table-col-before table-col-delete table-row-after table-row-before table-row-delete editor-bold editor-italic editor-ul editor-ol editor-ol-rtl editor-quote editor-alignleft editor-aligncenter editor-alignright editor-insertmore editor-spellcheck editor-expand editor-contract editor-kitchensink editor-underline editor-justify editor-textcolor editor-paste-word editor-paste-text editor-removeformatting editor-video editor-customchar editor-outdent editor-indent editor-help editor-strikethrough editor-unlink editor-rtl editor-ltr editor-break editor-code editor-paragraph editor-table align-left align-right align-center align-none lock unlock calendar calendar-alt visibility hidden post-status edit trash sticky external arrow-up arrow-down arrow-right arrow-left arrow-up-alt arrow-down-alt arrow-right-alt arrow-left-alt arrow-up-alt2 arrow-down-alt2 arrow-right-alt2 arrow-left-alt2 sort leftright randomize list-view excerpt-view grid-view move share share-alt share-alt2 rss email email-alt email-alt2 networking amazon facebook facebook-alt google instagram linkedin pinterest podio reddit spotify twitch twitter twitter-alt whatsapp xing youtube hammer art migrate performance universal-access universal-access-alt tickets nametag clipboard heart megaphone schedule tide rest-api code-standards buddicons-activity buddicons-bbpress-logo buddicons-buddypress-logo buddicons-community buddicons-forums buddicons-friends buddicons-groups buddicons-pm buddicons-replies buddicons-topics buddicons-tracking wordpress wordpress-alt pressthis update update-alt screenoptions info cart feedback cloud translation tag category archive tagcloud text bell yes yes-alt no no-alt plus plus-alt plus-alt2 minus dismiss marker star-filled star-half star-empty flag warning location location-alt vault shield shield-alt sos search slides text-page analytics chart-pie chart-bar chart-line chart-area groups businessman businesswoman businessperson id id-alt products awards forms testimonial portfolio book book-alt download upload backup clock lightbulb microphone desktop laptop tablet smartphone phone index-card carrot building store album palmtree tickets-alt money money-alt smiley thumbs-up thumbs-down layout paperclip color-picker edit-large edit-page airplane bank beer calculator car coffee drumstick food fullscreen-alt fullscreen-exit-alt games hourglass open-folder pdf pets printer privacy superhero superhero-alt</description>
+    <content><![CDATA[
+  {
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "w0/kaomoji-selector",
+	"version": "0.1.0",
+	"title": "顔文字セレクター",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "エディタ上で簡単に顔文字（kaomoji）を選び、記事に挿入できるブロックです。",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "kaomoji-selector-block-wp",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+  }
+  ]]></content>
+  </file>
+  <file name="index.js">
+    <description>This file registers the block, specifies the edit and save functions, and loads the block's metadata</description>
+	<content><![CDATA[
+  /**
+ * Registers a new block provided a unique name and an object defining its behavior.
+ */
+import { registerBlockType } from '@wordpress/blocks';
+import './style.scss';
+import Edit from './edit';
+import save from './save';
+import metadata from './block.json';
+
+registerBlockType( metadata.name, {
+	edit: Edit,
+	save,
+} );
+	]]></content>
+  </file>
+  <file name="edit.js">
+    <description>This file contains the edit function for the block which is responsible for rendering the block in the editor.</description>
+	<content><![CDATA[
+import { __ } from '@wordpress/i18n';
+import { useBlockProps } from '@wordpress/block-editor';
+import { useEffect } from '@wordpress/element';
+
+const KAOMOJIS = [
+	"(´・ω・`)",
+	"(｡･ω･｡)",
+	"(＾▽＾)",
+	"(；´∀｀)",
+	"(｀・ω・´)",
+	"( ´∀｀)",
+	"(￣ー￣)",
+	"(*´ω｀*)",
+	"＼(^o^)／",
+	"(T_T)",
+	"(^_^;)",
+	"(╯°□°）╯︵ ┻━┻",
+	"(・∀・)",
+	"(´Д｀)",
+	"(¬_¬)",
+	"(ﾟ∀ﾟ)",
+	"( ˘ω˘ )",
+	"٩( 'ω' )و",
+	"(￣^￣)ゞ",
+	"(⌒▽⌒)",
+];
+
+export default function Edit( { attributes, setAttributes, isSelected } ) {
+	const { kaomoji = "" } = attributes;
+
+	useEffect(() => {
+		// Set default if not set
+		if (!kaomoji && KAOMOJIS.length > 0) {
+			setAttributes( { kaomoji: KAOMOJIS[0] } );
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	const handleSelect = (emoji) => {
+		setAttributes( { kaomoji: emoji } );
+	};
+
+	return (
+		<div { ...useBlockProps() }>
+			<div className="kaomoji-selector__current" style={{ fontSize: "2rem", marginBottom: ".5em" }}>
+				{ kaomoji ? kaomoji : __( "顔文字を選択してください", "kaomoji-selector-block-wp" ) }
+			</div>
+			<div className="kaomoji-selector__list" style={{ display: "flex", flexWrap: "wrap", gap: ".2em" }}>
+				{ KAOMOJIS.map( (item) => (
+					<button
+						type="button"
+						key={item}
+						onClick={ () => handleSelect(item) }
+						aria-pressed={ kaomoji === item }
+						className={ "kaomoji-selector__button" + (kaomoji === item ? " is-selected" : "" ) }
+						style={{
+							padding: "0.2em 0.5em",
+							fontSize: "1.3em",
+							border: kaomoji === item ? "2px solid #21759b" : "1px solid #ddd",
+							borderRadius: "3px",
+							cursor: "pointer",
+							background: kaomoji === item ? "#eaf6fb" : "#fff",
+							transition: "border .15s"
+						}}
+					>{item}</button>
+				))}
+			</div>
+		</div>
+	);
+}
+	]]></content>
+  </file>
+  <file name="save.js">
+    <description>This file contains the save function for the block which is responsible for creating the static result of rendering the block on the client to display the saved result on the front end.</description>
+	<content><![CDATA[
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ */
+import { useBlockProps } from '@wordpress/block-editor';
+
+export default function save( { attributes } ) {
+	const { kaomoji = "" } = attributes;
+	return (
+		<div { ...useBlockProps.save() }>
+			<span className="kaomoji-selector__output" style={{ fontSize: "2rem" }}>
+				{ kaomoji }
+			</span>
+		</div>
+	);
+}
+	]]></content>
+  </file>
+  <file name="style.scss">
+    <description>This file contains styles for the block in the front end.</description>
+	<content><![CDATA[
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ */
+
+.wp-block-w0-kaomoji-selector {
+	text-align: center;
+}
+
+.kaomoji-selector__output {
+	font-family: inherit;
+	display: inline-block;
+}
+
+.kaomoji-selector__current {
+	font-weight: bold;
+}
+
+.kaomoji-selector__button.is-selected {
+	box-shadow: 0 0 3px 2px #cce6f2;
+}
+	]]></content>
+  </file>
+  <file name="editor.scss">
+    <description>This file contains styles for the block in the editor.</description>
+	<content><![CDATA[
+.wp-block-w0-kaomoji-selector {
+	border: 1px dashed #21759b;
+	padding: 1em;
+	background: #f8fbfc;
+}
+.kaomoji-selector__button:focus {
+	outline: 2px solid #21759b;
+}
+	]]></content>
+  </file>
+  <file name="view.js">
+    <description>This file contains the view function for the block which is responsible for rendering interactive behaviors of the block on the front end. Ideally using the WordPress interactivity API.</description>
+	<content><![CDATA[
+/**
+ * Use this file for JavaScript code that you want to run in the front-end
+ * on posts/pages that contain this block.
+ */
+console.log("Hello World! (from w0-kaomoji-selector block)");
+	]]></content>
+  </file>
+  <file name="render.php">
+    <description>This file contains the render callback function for the block, which is responsible for rendering the block content on the front end. A render function should exist only if the block is dynamic.</description>
+    <content><![CDATA[]]></content>
+  </file>
+  <file name="package.json">
+    <description>The AI assistant should only edit 'user_provided_block_name_slug', 'description' and resolve 'isDynamicVariant' in this file and ALWAYS INCLUDE IT. This file includes the necessary scripts for building, formatting, and linting the block code. Dependencies are managed at the workspace level via pnpm.</description>
+  <content><![CDATA[
+  {
+	"name": "kaomoji-selector",
+	"version": "0.1.0",
+	"description": "エディタ上で簡単に顔文字（kaomoji）を選び、記事に挿入できるブロックです。",
+	"author": "w0 block authoring tool",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --blocks-manifest"
+	}
+}
+]]></content>
+  </file>
+</artefact>
